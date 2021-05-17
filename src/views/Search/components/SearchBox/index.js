@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import './style.css'
-const SearchBox = ({onSearch, onClose}) => {
+const SearchBox = ({onSearch, onClose, isAtTop}) => {
     const [value, setValue] = useState('');
 
     const handleCloseClick = () =>{
@@ -9,15 +9,21 @@ const SearchBox = ({onSearch, onClose}) => {
     }
     return (
         <div className="searchBox">
-           <label htmlFor="location"><h2 className="SearchBox__title">Search Location</h2></label>
-           <input 
-             value={value} 
-             id="location"
-             onChange={({target:{value}}) => setValue(value)}
-             className="SearchBox__input"
-            />
-           <button onClick={()=>{onSearch(value.toLowerCase())}}>Search</button>
-           <button onClick={()=>{handleCloseClick()}}>Close</button>
+            <div className="SearchBox__logo">
+                <img src='https://help.redbubble.com/hc/article_attachments/360002309526/Rick_and_Morty_-_logo__English_.png' alt='logo'/>
+                <p className="subtitle">App</p>
+            </div>
+            <div className={isAtTop ? 'SearchBox__box' : undefined}>
+                {isAtTop &&  <button className="btn btn-close" onClick={()=>{handleCloseClick()}}>Close</button>}
+                <input 
+                    className="SearchBox__input"
+                    id="location"
+                    onChange={({target:{value}}) => setValue(value)}
+                    placeholder='Write location name'
+                    value={value} 
+                    />
+                {value && <button className="btn btn-search" onClick={()=>{onSearch(value.toLowerCase())}} disabled={!value.length}>Search</button>}
+            </div>
         </div>
     )
 }

@@ -1,8 +1,3 @@
 import LocationContainer from "./components/LocationContainer";
-
-const Location = ({data})=>{
-
-    return <LocationContainer info={data}/>
-}
-
+const Location = ({data})=> <LocationContainer info={data}/>
 export default Location;

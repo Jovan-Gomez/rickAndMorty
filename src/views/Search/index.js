@@ -13,13 +13,16 @@ const Search = () => {
             setIsAtTop(true);
             getLocation(queryTerm)
             .then((data)=>{
-                const findData = data.find((value)=>{
-                    return value
-                })
-                setResults(findData)
-            })
+                if(data?.length){
+                    const findData = data.find((value)=>value)
+                    setResults(findData)
+                }else{
+                    setResults(data)
+                }
+            });
         }
     }, [queryTerm]);
+
     const handleCloseClick = ()=>{
         setIsAtTop(false);
         setResults({});
@@ -28,11 +31,9 @@ const Search = () => {
    
     return (
         <header className={`App-header ${isAtTop ? "search-top" : "search-center"}`}>
-            <SearchBox onSearch={setQueryTerm} onClose={handleCloseClick}/>
-          {  
-            isAtTop && <Location data={results}/>
-          }
-        <Residents arrayResidentsUrl={results.residents}/>
+          <SearchBox onSearch={setQueryTerm} onClose={handleCloseClick} isAtTop={isAtTop}/>
+          {isAtTop &&  <Location data={results}/>}
+          {isAtTop && <Residents arrayResidentsUrl={results.residents}/>}
         </header>
     )
 }
